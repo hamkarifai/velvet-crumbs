@@ -42,7 +42,7 @@ const Menu = () => {
       </section>
 
       {/* Filter Bar */}
-      <section className="py-6 bg-background border-b border-border sticky top-20 z-40 backdrop-blur-md bg-background/95">
+      <section className="py-6 border-b border-border sticky top-20 z-40 backdrop-blur-md bg-background/95">
         <div className="max-w-screen-xl mx-auto px-4 md:px-8">
           <div className="flex flex-wrap gap-3 justify-center">
             {categories.map((category) => (

@@ -8,6 +8,8 @@ import cakeChocolate from "@/assets/cake-chocolate.jpg";
 import cakeStrawberry from "@/assets/cake-strawberry.jpg";
 import cakeVanilla from "@/assets/cake-vanilla.jpg";
 import cakeRedVelvet from "@/assets/cake-redvelvet.jpg";
+import { useEffect, useState } from "react";
+import supabase from "@/lib/db";
 
 const imageMap: Record<string, string> = {
   "cake-chocolate.jpg": cakeChocolate,
@@ -18,6 +20,24 @@ const imageMap: Record<string, string> = {
 
 const Home = () => {
   const featuredProducts = products.filter((p) => p.featured);
+  const [cakes, setCakes] = useState<ICake[]>([]);
+
+  useEffect(() => {
+    const fetchCakes = async () => {
+      const { data, error } = await supabase.from("cakes").select("*");
+
+      if (error) {
+        console.error("Error fetching cakes:", error);
+        return;
+      } else {
+        setCakes(data);
+      }
+    };
+
+    fetchCakes();
+  }, [supabase]);
+
+  console.log(cakes);
 
   return (
     <div className="min-h-screen">
@@ -31,7 +51,8 @@ const Home = () => {
                 Freshly Baked Happiness
               </h1>
               <p className="font-sans text-lg md:text-xl text-muted-foreground leading-relaxed">
-                Every slice tells a story of passion, quality ingredients, and love baked into every layer.
+                Every slice tells a story of passion, quality ingredients, and
+                love baked into every layer.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <Link to="/menu">
@@ -46,11 +67,15 @@ const Home = () => {
               <div className="flex items-center gap-6 pt-6">
                 <div className="flex items-center gap-2">
                   <Star className="h-5 w-5 text-accent fill-accent" />
-                  <span className="font-sans text-sm font-medium">4.9/5 Rating</span>
+                  <span className="font-sans text-sm font-medium">
+                    4.9/5 Rating
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Heart className="h-5 w-5 text-primary fill-primary" />
-                  <span className="font-sans text-sm font-medium">2000+ Happy Customers</span>
+                  <span className="font-sans text-sm font-medium">
+                    2000+ Happy Customers
+                  </span>
                 </div>
               </div>
             </div>
@@ -142,7 +167,8 @@ const Home = () => {
                 Special Offer This Month
               </h2>
               <p className="font-sans text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Order 2 cakes and get 1 free! Perfect for celebrations, parties, or just treating yourself.
+                Order 2 cakes and get 1 free! Perfect for celebrations, parties,
+                or just treating yourself.
               </p>
               <Link to="/menu">
                 <Button variant="hero">Order Now</Button>
@@ -165,25 +191,34 @@ const Home = () => {
             {[
               {
                 name: "Sarah Johnson",
-                review: "The best cake I've ever tasted! The chocolate dream is absolutely divine.",
+                review:
+                  "The best cake I've ever tasted! The chocolate dream is absolutely divine.",
                 rating: 5,
               },
               {
                 name: "Michael Chen",
-                review: "Perfect for our wedding! Beautiful presentation and incredible taste.",
+                review:
+                  "Perfect for our wedding! Beautiful presentation and incredible taste.",
                 rating: 5,
               },
               {
                 name: "Emily Davis",
-                review: "I order from Velvet Crumb every month. Consistent quality and always fresh!",
+                review:
+                  "I order from Velvet Crumb every month. Consistent quality and always fresh!",
                 rating: 5,
               },
             ].map((testimonial, index) => (
-              <Card key={index} className="border-2 border-border hover:border-primary/50 transition-colors">
+              <Card
+                key={index}
+                className="border-2 border-border hover:border-primary/50 transition-colors"
+              >
                 <CardContent className="p-6">
                   <div className="flex gap-1 mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 text-accent fill-accent" />
+                      <Star
+                        key={i}
+                        className="h-4 w-4 text-accent fill-accent"
+                      />
                     ))}
                   </div>
                   <p className="font-sans text-muted-foreground mb-4 italic">
