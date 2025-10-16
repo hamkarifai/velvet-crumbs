@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Velvet Crumb Design System - Playful Cake Shop */
+    
+    /* Brand Colors - All HSL for perfect theming */
+    --background: 30 50% 98%; /* Warm cream */
+    --foreground: 25 15% 25%; /* Dark brown text */
+
+    --card: 0 0% 100%; /* Pure white cards */
+    --card-foreground: 25 15% 25%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 25 15% 25%;
+
+    --primary: 340 70% 88%; /* Soft pink */
+    --primary-foreground: 25 15% 25%;
+
+    --secondary: 155 45% 85%; /* Mint green */
+    --secondary-foreground: 25 15% 25%;
+
+    --accent: 45 100% 87%; /* Warm yellow */
+    --accent-foreground: 25 15% 25%;
+
+    --muted: 30 30% 94%;
+    --muted-foreground: 25 15% 50%;
+
+    --destructive: 0 70% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 340 30% 90%;
+    --input: 340 30% 95%;
+    --ring: 340 70% 75%;
+
+    --radius: 1rem;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(340, 70%, 92%), hsl(45, 100%, 92%));
+    --gradient-soft: linear-gradient(180deg, hsl(30, 50%, 98%), hsl(340, 40%, 96%));
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 24px -4px hsl(340 40% 80% / 0.2);
+    --shadow-hover: 0 8px 32px -8px hsl(340 50% 70% / 0.3);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 25 20% 12%;
+    --foreground: 30 20% 95%;
+    --card: 25 20% 15%;
+    --card-foreground: 30 20% 95%;
+    --popover: 25 20% 15%;
+    --popover-foreground: 30 20% 95%;
+    --primary: 340 60% 70%;
+    --primary-foreground: 25 15% 15%;
+    --secondary: 155 35% 60%;
+    --secondary-foreground: 25 15% 15%;
+    --accent: 45 90% 70%;
+    --accent-foreground: 25 15% 15%;
+    --muted: 25 15% 25%;
+    --muted-foreground: 30 10% 65%;
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 25 15% 25%;
+    --input: 25 15% 25%;
+    --ring: 340 60% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
