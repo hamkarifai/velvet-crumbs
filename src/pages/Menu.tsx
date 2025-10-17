@@ -1,31 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { products } from "@/data/products";
-import cakeChocolate from "@/assets/cake-chocolate.jpg";
-import cakeStrawberry from "@/assets/cake-strawberry.jpg";
-import cakeVanilla from "@/assets/cake-vanilla.jpg";
-import cakeRedVelvet from "@/assets/cake-redvelvet.jpg";
-
-const imageMap: Record<string, string> = {
-  "cake-chocolate.jpg": cakeChocolate,
-  "cake-strawberry.jpg": cakeStrawberry,
-  "cake-vanilla.jpg": cakeVanilla,
-  "cake-redvelvet.jpg": cakeRedVelvet,
-};
+import supabase from "@/lib/db";
 
 type Category = "All" | "Classic" | "Fruity" | "Premium" | "Modern";
 
 const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category>("All");
+  const [cakes, setCakes] = useState<ICake[]>([]);
 
-  const categories: Category[] = ["All", "Classic", "Fruity", "Premium", "Modern"];
+  useEffect(() => {
+    const fetchCakes = async () => {
+      const { data, error } = await supabase.from("cakes").select("*");
+
+      if (error) {
+        console.error("Error fetching cakes:", error);
+        return;
+      } else {
+        setCakes(data);
+      }
+    };
+
+    fetchCakes();
+  }, [supabase]);
+
+  const categories: Category[] = [
+    "All",
+    "Classic",
+    "Fruity",
+    "Premium",
+    "Modern",
+  ];
 
   const filteredProducts =
     selectedCategory === "All"
-      ? products
-      : products.filter((p) => p.category === selectedCategory);
+      ? cakes
+      : cakes.filter((p) => p.category === selectedCategory);
 
   return (
     <div className="min-h-screen pt-20 pb-16">
@@ -72,7 +83,7 @@ const Menu = () => {
                 <Card className="overflow-hidden border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-hover h-full">
                   <div className="aspect-square overflow-hidden bg-muted">
                     <img
-                      src={imageMap[product.image]}
+                      src={product.image}
                       alt={product.name}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />

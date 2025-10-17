@@ -106,7 +106,7 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {featuredProducts.map((product, index) => (
+            {cakes.map((product, index) => (
               <Link
                 key={product.id}
                 to={`/cake/${product.id}`}
@@ -116,7 +116,7 @@ const Home = () => {
                 <Card className="overflow-hidden border-2 border-border hover:border-primary transition-all duration-300 hover:shadow-hover">
                   <div className="aspect-square overflow-hidden bg-muted">
                     <img
-                      src={imageMap[product.image]}
+                      src={product.image}
                       alt={product.name}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
